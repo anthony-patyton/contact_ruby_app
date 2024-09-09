@@ -1,53 +1,100 @@
-=begin
-Basic Objectives
+# Build a contact list
+  # menu 
+  #  store all contact 
+    # array, hash, variable, scope file wide
+    # contact has first name, string
+    # contact has last name, string
+    # contact has phone, string
+    # contact has favorite, boolean
+# Create a menu that allows a user to select 1) Create a contact 2) View All Contacts 3) Exit
+  #  method to display menu 
+  #  grab the user input to see what they select, store in var
+  #  logic to see if the choose 1, 2, 3 
+    # 1 create a contact 
+      #  grab the user input for first name, last name, phone, favorite 
+      #  throw the values in a hash 
+      #  add the hash to the contacts array
+    # 2 view all contact 
+      # iterate through the array of hashes and display them in a 
+      # nice string
+      # might use index 
+    #  3 exit
+      # say goodbye 
+      # exit
+# The menu should loop until the user exits
+  #  recursion to loop until user exits
+  # or we can through menu in a while loop until the user exits
 
-Build a contact list
-Create a menu that allows a user to select 1) Create a contact 2) View All Contacts 3) Exit
-The menu should loop until the user exits
-Bonus Objectives
+@contacts = [
+  { first_name: 'bob', last_name: 'smith', phone_number: '123-123-1233', email: nil, favorite: false },
+  { first_name: 'lucy', last_name: 'jones', phone_number: '123-321-1233', email: nil, favorite: true },
+  { first_name: 'jack', last_name: 'mac', phone_number: '333-123-1233', email: nil, favorite: true },
+]
 
-Delete a contact
-Edit a contact   
-=end
-
-while true
-  
+def main_menu
   puts "-" * 50
-  puts "Contact Menu list \n 1.Create a contact \n 2. View all Contacts \n 3. Delete contact \n 4. Edit Contact \n 5.Exit"
-  
-  #contact has :name[key] = phone_number[string]
-  
-  @contact = {name: 'anthony', phone_number: '123-123-1234'}
-
-  @contact_list = Array.new
-  
-  user_choice = gets.strip.to_i
-  
-  #method to dispay a contact
-  def display_contacts()
-    #puts @contact_list
-    puts @contact
-  end 
-
-  if user_choice == 1
-    #creating a contact
-    puts "enter Contact Name:"
-    @contact_name = gets.strip.to_s
-    puts "enter #{@contact_name} phone number"
-    contact_num = gets.strip.to_s
-    puts "Created Contact #{@contact}"
-    @contact[@contact_name] = contact_num
-  elsif user_choice == 2
-    puts "View all contacts"
-    display_contacts
-  elsif user_choice == 3
-    puts "Delete contact"
-  elsif user_choice == 4
-    puts "Delete contact"
-  elsif user_choice == 5
-    puts "exiting" + '-' * 50
+  puts "Contact Menu list  
+  1 .Create a contact  
+  2. View all Contacts  
+  3. Delete contact  
+  4. Edit Contact  
+  5. View favorite contacts
+  6. Exit"
+  user_input = gets.strip.to_i
+  if user_input == 1
+    create_contact
+  elsif user_input == 2
+    view_contacts
+  elsif user_input == 3
+    delete_contact
+  elsif user_input == 4
+    edit_contact
+  elsif user_input == 5
+    fav_contacts
+  elsif user_input == 6
     exit
   else
-    puts "Please type 1, 2, 3, 4, or 5"
+    puts "Please type 1, 2, 3, 4, 5, or 6"
+    main_menu
   end
 end
+
+def create_contact
+  puts "Creating Contact:"
+  puts "Enter Name"
+  name = gets.strip
+  puts "Enter Phone phone_number:"
+  new_phone_number = gets.strip
+  puts "Enter email:"
+  email = nil #email_account #check if user left empty
+
+  fav_contact = nil #check_fav
+
+  new_contact = {
+    first_name: name,
+    phone_number: new_phone_number,
+    email: nil,
+    fav_contact: nil
+  }
+
+  #adding the new_contact to @contacts <<
+  @contacts << new_contact
+  main_menu
+end
+
+def view_contacts
+  @contacts.each do |contact|
+    puts '-' * 50
+    contact.each do |key, value|
+      puts "#{key}: #{value}"
+    end
+  end
+  main_menu
+end
+
+
+main_menu
+
+#while true
+#main_menu
+#end
