@@ -1,30 +1,4 @@
 require 'pry'
-# Build a contact list
-  # menu 
-  #  store all contact 
-    # array, hash, variable, scope file wide
-    # contact has first name, string
-    # contact has last name, string
-    # contact has phone, string
-    # contact has favorite, boolean
-# Create a menu that allows a user to select 1) Create a contact 2) View All Contacts 3) Exit
-  #  method to display menu 
-  #  grab the user input to see what they select, store in var
-  #  logic to see if the choose 1, 2, 3 
-    # 1 create a contact 
-      #  grab the user input for first name, last name, phone, favorite 
-      #  throw the values in a hash 
-      #  add the hash to the contacts array
-    # 2 view all contact 
-      # iterate through the array of hashes and display them in a 
-      # nice string
-      # might use index 
-    #  3 exit
-      # say goodbye 
-      # exit
-# The menu should loop until the user exits
-  #  recursion to loop until user exits
-  # or we can through menu in a while loop until the user exits
 
 @contacts = [
   { first_name: 'bob', last_name: 'smith', phone_number: '123-123-1233', email: nil, favorite: false },
@@ -62,6 +36,10 @@ def main_menu
   end
 end
 
+def check_fav
+
+end
+
 def create_contact
   puts "Creating Contact:"
   puts "Enter Name"
@@ -71,7 +49,7 @@ def create_contact
   puts "Enter email:"
   email = nil #email_account #check if user left empty
 
-  fav_contact = nil #check_fav
+  fav_contact = check_fav
 
   new_contact = {
     first_name: name,
@@ -99,21 +77,53 @@ def delete_contact
   puts "Enter Contact name:"
   delete_contact_name = gets.strip.to_s
 
-  puts "Are you sure you want to delete? #{delete_contact_name} y/n"
+  puts "Are you sure you want to delete? y/n"
   confirmation = gets.strip.downcase
   
   if confirmation == 'y'
     @contacts.delete_if { |contact| contact[:first_name] == delete_contact_name}
     puts "Deleting contact #{delete_contact_name}"
-  elsif confirmation == 'n'
-    puts "Counldn't find contact"
-    main_menu
-  else
+  else confirmation == 'n'
     puts "please type Y or N"
   end
   
   main_menu
 end
+
+def edit_contact
+  puts "Contact you want to edit"
+  contact_index = gets.strip.to_i 
+  puts "Enter contact you'd like to edit"
+  edit_contact_name = gets.strip
+
+  if (@contacts.find { |contact| contact[:first_name] == edit_contact_name})
+    puts "Edit Contact #{edit_contact_name.upcase}"
+    puts "Enter New Name:"
+    new_first_name = gets.strip
+    puts "Enter New Last name:"
+    new_last_name = gets.strip
+    puts "Enter New phone number:"
+    new_phone_number = gets.strip
+    puts "Enter email"
+    new_email = gets.strip
+    puts "Part of favorites y/n"
+    favorite = check_fav
+    edited_contact = {
+      first_name: new_first_name,
+      last_name: new_last_name,
+      phone_number: new_phone_number,
+      email: new_email,
+      favorite: nil
+    }
+    
+    #contact[:key] = edited_contact
+    @contacts[contact_index] = edited_contact
+  else
+    puts "Couldn't find contact: #"
+  end
+  main_menu
+end
+
 
 main_menu
 
