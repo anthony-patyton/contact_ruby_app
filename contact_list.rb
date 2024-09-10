@@ -1,3 +1,4 @@
+require 'pry'
 # Build a contact list
   # menu 
   #  store all contact 
@@ -31,10 +32,11 @@
   { first_name: 'jack', last_name: 'mac', phone_number: '333-123-1233', email: nil, favorite: true },
 ]
 
+
 def main_menu
   puts "-" * 50
   puts "Contact Menu list  
-  1 .Create a contact  
+  1. Create a contact  
   2. View all Contacts  
   3. Delete contact  
   4. Edit Contact  
@@ -52,6 +54,7 @@ def main_menu
   elsif user_input == 5
     fav_contacts
   elsif user_input == 6
+    puts "Goodbye"
     exit
   else
     puts "Please type 1, 2, 3, 4, 5, or 6"
@@ -92,6 +95,25 @@ def view_contacts
   main_menu
 end
 
+def delete_contact
+  puts "Enter Contact name:"
+  delete_contact_name = gets.strip.to_s
+
+  puts "Are you sure you want to delete? #{delete_contact_name} y/n"
+  confirmation = gets.strip.downcase
+  
+  if confirmation == 'y'
+    @contacts.delete_if { |contact| contact[:first_name] == delete_contact_name}
+    puts "Deleting contact #{delete_contact_name}"
+  elsif confirmation == 'n'
+    puts "Counldn't find contact"
+    main_menu
+  else
+    puts "please type Y or N"
+  end
+  
+  main_menu
+end
 
 main_menu
 
